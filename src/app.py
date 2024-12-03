@@ -1,12 +1,11 @@
-from src.utils.helpers import Helpers
 
 
 class Calculator:
-    def __init__(self, app_running):
+    def __init__(self, app_running, db_engine, json_engine, helpers):
         self.app_running = app_running
-
-        self.helpers = Helpers()
-
+        self.db_engine = db_engine
+        self.json_engine = json_engine
+        self.helpers = helpers
         self.start()
 
     def start(self):
@@ -18,5 +17,3 @@ class Calculator:
 
         start corresponding calculator engine
         """
-        user_menu_choice = self.helpers.display_menu()
-
