@@ -46,21 +46,21 @@ class Printer:
                 return input_str
             self.write_ln(error_message, error_color)
 
-    def get_from_console(
-        self,
-        prompt: str,
-        color: ConsoleColors,
-        parser: Callable[[str], T],
-        validator: Optional[Callable[[T], bool]] = None,
-        error_message: Optional[str] = None,
-        error_color: ConsoleColors = ConsoleColors.RED
-    ) -> T:
-        while True:
-            self.write_no_ln(prompt, color)
-            try:
-                value = parser(input())
-                if validator is None or validator(value):
-                    return value
-            except ValueError:
-                pass
-            self.write_ln(error_message, error_color)
+    # def get_from_console(
+    #     self,
+    #     prompt: str,
+    #     color: ConsoleColors,
+    #     parser: Callable[[str], T],
+    #     validator: Optional[Callable[[T], bool]] = None,
+    #     error_message: Optional[str] = None,
+    #     error_color: ConsoleColors = ConsoleColors.RED
+    # ) -> T:
+    #     while True:
+    #         self.write_no_ln(prompt, color)
+    #         try:
+    #             value = parser(input())
+    #             if validator is None or validator(value):
+    #                 return value
+    #         except ValueError:
+    #             pass
+    #         self.write_ln(error_message, error_color)
