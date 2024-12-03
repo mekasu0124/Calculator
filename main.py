@@ -1,31 +1,38 @@
-from src.engines.db_engine import DbEngine
-from src.engines.json_engine import JsonEngine
 from src.utils.helpers import Helpers
 from src.utils.printer import Printer, ConsoleColors
 
-from src.app import Calculator
-
 
 class Main:
-    def __init__(self, db, json, helpers, printer, console_colors):
-        self.db = db
-        self.json = json
+    def __init__(self, running, helpers, printer, console_colors):
+        self.running = running
         self.helpers = helpers
         self.printer = printer
         self.colors = console_colors
-        self.start()
 
     def start(self):
         self.helpers.display_greeting(self.printer, self.colors)
 
+        self.running = False
+        return self.running
+
 if __name__ == '__main__':
     running = True
-    
-    db_engine = DbEngine()
-    json_engine = JsonEngine()
+
     helpers = Helpers()
     printer = Printer()
-    console_colors = ConsoleColors()
+    console_colors = ConsoleColors
+
+    main = Main(running, helpers, printer, console_colors)
 
     while running:
-        Calculator(running, db_engine, json_engine, helpers, printer, console_colors)
+        """
+        * set the start function equal to the running variable so that
+        * at any point throughout the program we call running = False
+        * return running, it will stop the program as shown below and
+        * in line 16 of the Main class above
+
+        ! if you remove the variable re-declaration, you risk breaking the entire
+        ! program. If you choose to replace this with another method, do so at
+        ! your own risk.
+        """
+        running = main.start()
