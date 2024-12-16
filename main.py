@@ -1,87 +1,82 @@
+from src.utils.colors import ConsoleColors
 from src.utils.helpers import Helpers
-from src.utils.printer import Printer, ConsoleColors
-from src.utils.menu_generator import MenuGenerator
+from src.utils.printer import Printer
 
 from src.app.standard.app import StandardCalculator
 
 
 class Main:
-    """
-    ? The Main class is what controls the applications
-    ? life cycle, and which program runs based off user
-    ? input.
-    """
-    def __init__(self, running, helpers, printer, console_colors, menu_gen, standard):
-        """
-        ? The main class is initialized with 4 properties:
-
-        * - running => the boolean value that controls the life cycle of the application
-        * - helpers => a utility class that has multi-use capabilities.
-        * - printer, console_colors => from the printer utility class, allows colors to
-        *   used in the console along with being able to have a typewriter effect for responses
-        *   displayed to the user
-        """
-        
+    def __init__(self, running, printer, colors, helpers, standard_calc):
         self.running = running
-        self.helpers = helpers
         self.printer = printer
-        self.colors = console_colors
-        self.menu_gen = menu_gen
+        self.colors = colors
+        self.helpers = helpers
 
-        self.standard_calc = standard
+        self.standard_calc = standard_calc
 
     def start(self):
-        """
-        ? This method starts the program. It handles:
+        self.helpers.display_greeting()
+        
+        text = [
+            "\n",
+            "Which Calculator Would You Like?",
+            "1. Standard",
+            "2. Scientific",
+            "C. Contact Us",
+            "Q. Exit"
+        ]
 
-        * displaying the welcome messages to the user
-        * obtaining user input from main menu on calculator selection or exiting program
-        * calling the corresponding user desired calculator to run
-        * ending the application life cycle upon user request
-        """
+        self.printer.typewriter(
+            content = text,
+            color = self.colors.PURPLE,
+            italic = True,
+        )
 
-        self.helpers.display_greeting(self.printer, self.colors)
+        valid_menu_choice = self.helpers.get_user_input(
+            "\n>>> Your Selection (1, 2, C, Q): ", 
+            ["1", "2", "C", "Q", "c", "q"]
+        )
 
-        menu_choice = self.menu_gen.display_main_menu(self.printer, self.colors)
-
-        if menu_choice == "1":
+        if valid_menu_choice == "1":
             self.standard_calc.start()
-
-        elif menu_choice == "2":
-            print("You Chose Scientific")
-
-        elif menu_choice.lower() == "c":
-            self.helpers.display_contact(self.printer, self.colors)
+        
+        elif valid_menu_choice == "2":
+            print("Scientific Calculator Chosen")
+            return self.stop()
+        
+        elif valid_menu_choice.lower() == "c":
+            self.helpers.display_contact()
             self.start()
 
-        elif menu_choice.lower() == "q":
-            print("You Chose Exit")
-            self.running = False
-            return self.running
-        else:
-            print("Unknown Input")
+        elif valid_menu_choice.lower() == "q":
+            self.printer.typewriter(
+                content = "Exiting Calculator... Please Wait...",
+                color = self.colors.BLACK,
+                background = self.colors.YELLOWB,
+                italic = True,
+                bold = True,
+                underline = True
+            )
+
+            return self.stop()
+
+    def stop(self):
+        self.running = False
+
 
 if __name__ == '__main__':
     running = True
 
-    helpers = Helpers()
     printer = Printer()
-    console_colors = ConsoleColors
-    menu_gen = MenuGenerator()
+    colors = ConsoleColors
 
-    standard = StandardCalculator(helpers, printer, console_colors, menu_gen)
+    helpers = Helpers(printer, colors)
 
-    main = Main(running, helpers, printer, console_colors, menu_gen, standard)
+    standard_calc = StandardCalculator(printer, colors, helpers)
+
+    main = Main(running, printer, colors, helpers, standard_calc)
+
+    standard_calc.set_stop_callback(main.stop())
 
     while running:
-        """
-        * set the start function equal to the running variable so that
-        * at any point throughout the program we call running = False
-        * return running, it will stop the program as shown below and
-        * in line 16 of the Main class above
-
-        ! if you remove the variable re-declaration, you risk breaking the entire
-        ! program. If you choose to replace this with another method, do so at
-        ! your own risk.
-        """
         running = main.start()
