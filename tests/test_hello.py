@@ -1,5 +1,5 @@
 from click.testing import CliRunner
-from cli_app.commands.hello import hello_command
+from cli_app.commands.general.hello import hello_command
 
 
 def test_hello_command():

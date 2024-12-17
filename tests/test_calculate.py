@@ -1,5 +1,5 @@
 from click.testing import CliRunner
-from cli_app.commands.calculate import calculate_command
+from cli_app.commands.standard.calculate import calculate_command
 
 
 def test_calculate_command():
