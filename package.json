@@ -1,0 +1,27 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "a simple command-line-interface (CLI) calculator application",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "npm run build",
+    "build": "sudo docker build -t calculator . && npm run start",
+    "start": "sudo docker run calculator:latest calculate 2 / 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mekasu0124/Calculator.git"
+  },
+  "author": "mekasu0124",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "bugs": {
+    "url": "https://github.com/mekasu0124/Calculator/issues"
+  },
+  "homepage": "https://github.com/mekasu0124/Calculator#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
