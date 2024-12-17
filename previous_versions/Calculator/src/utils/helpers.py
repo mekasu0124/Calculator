@@ -10,10 +10,9 @@ class Helpers:
             "~"*45
         ]
 
-        return self.printer.typewriter(
-            content = text,
-            color = self.colors.BLUE,
-            italic = True,
+        return self.printer.write(
+            text,
+            color = self.colors.BLUE
         )
 
     def display_contact(self):
@@ -34,28 +33,23 @@ class Helpers:
             "~"*75
         ]
 
-        return self.printer.typewriter(
-            content = text,
+        return self.printer.write(
+            text,
             color = self.colors.CYAN,
-            italic = True,
         )
     
-    def get_user_input(self, prompt: str, valid_inputs: list):
-        choice = input(prompt)
+    def display_start_menu(self):        
+        text = [
+            "\n",
+            "Which Calculator Would You Like?",
+            "\n1. Standard",
+            "2. Scientific",
+            "H. View History",
+            "C. Contact Us",
+            "Q. Exit"
+        ]
 
-        while not choice in valid_inputs:
-            self.printer.typewriter(
-                prompt = f"\nInvalid Input. Input Must Be: {', '.join(valid_inputs)}",
-                color = self.colors.BLACK,
-                background = self.colors.REDB,
-                bold = True,
-                italic = True,
-                underline = True
-            )
-
-            choice = input(f"\n{prompt}")
-
-            if self.validators.is_number(choice):
-                return choice
-        
-        return choice
+        self.printer.write(
+            text,
+            color = self.colors.PURPLE
+        )
