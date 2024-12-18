@@ -44,6 +44,30 @@
       "num1": 16.0,
       "operation": "percent",
       "solution": 0.16
+    },
+    {
+      "num1": 5.0,
+      "operation": "*",
+      "num2": 15465138.0,
+      "solution": 77325690.0
+    },
+    {
+      "num1": 5.0,
+      "operation": "*",
+      "num2": 15.0,
+      "solution": 75.0
+    },
+    {
+      "num1": 5.0,
+      "operation": "*",
+      "num2": 15.0,
+      "solution": 75.0
+    },
+    {
+      "num1": 5.0,
+      "operation": "+",
+      "num2": 6.0,
+      "solution": 11.0
     }
   ]
 }

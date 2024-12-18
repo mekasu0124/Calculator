@@ -57,7 +57,7 @@ class StandardCalculator:
             solution = self.get_solution(valid_num1, valid_operation)
             print(solution)
 
-            input("\nPress Enter To Continue...")
+        input("\nPress Enter To Continue...")
 
     def validate_inputs(self, num1: int, operation: str, num2: int = None) -> list:
         if num2:
