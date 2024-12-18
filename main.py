@@ -37,7 +37,7 @@ class Main:
                 self.standard_calc.start()  # Call the standard calculator logic
 
             elif valid_menu_choice == "2":
-                print("Scientific Calculator Chosen")d
+                print("Scientific Calculator Chosen")
                 # Placeholder for scientific calculator logic
 
             elif valid_menu_choice.lower() == "h":
@@ -47,13 +47,9 @@ class Main:
                 self.helpers.display_contact()
 
             elif valid_menu_choice.lower() == "q":
-                self.printer.typewriter(
-                    content="Exiting Calculator... Please Wait...",
-                    color=self.colors.BLACK,
-                    background=self.colors.YELLOWB,
-                    italic=True,
-                    bold=True,
-                    underline=True
+                self.printer.write(
+                    "Exiting Calculator... Please Wait...",
+                    color=self.colors.BLACK
                 )
                 self.stop()
 

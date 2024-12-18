@@ -1,0 +1,49 @@
+﻿{
+  "history": [
+    {
+      "num1": 3.0,
+      "operation": "/",
+      "num2": 5.0,
+      "solution": 0.6
+    },
+    {
+      "num1": 16.0,
+      "operation": "sqrt",
+      "num2": null,
+      "solution": 4.0
+    },
+    {
+      "num1": 16.0,
+      "operation": "sqrt",
+      "num2": null,
+      "solution": 4.0
+    },
+    {
+      "num1": 16.0,
+      "operation": "sqrt",
+      "num2": null,
+      "solution": 4.0
+    },
+    {
+      "num1": 16.0,
+      "operation": "sqrt",
+      "num2": null,
+      "solution": 4.0
+    },
+    {
+      "num1": 16.0,
+      "operation": "sqrt",
+      "solution": 4.0
+    },
+    {
+      "num1": 16.0,
+      "operation": "percent",
+      "solution": 1600.0
+    },
+    {
+      "num1": 16.0,
+      "operation": "percent",
+      "solution": 0.16
+    }
+  ]
+}

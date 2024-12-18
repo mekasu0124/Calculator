@@ -30,9 +30,7 @@ class Printer:
         while True:
             self.write_no_ln(prompt, color)
             input_str = input()
-            print("validating input")
             if validator is None or validator(input_str):
-                print("input valid. returning")
                 return input_str
             self.write_ln(error_message, error_color)
 
