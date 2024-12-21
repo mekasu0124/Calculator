@@ -169,4 +169,3 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
-src/utils/__pycache__/helpers.cpython-312.pyc
