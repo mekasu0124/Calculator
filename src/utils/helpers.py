@@ -1,55 +1,43 @@
+import json
+import time
+import os
+
+
 class Helpers:
-    def __init__(self, printer, colors):
-        self.printer = printer
-        self.colors = colors
+    def print_title_bar(self, subtitle: str = None):
+        if subtitle:
+            txt = [
+                "~"*34 + "\n",
+                f"   {subtitle} Calculator - v1.0.0\n",
+                "~"*34 + "\n"
+            ]
+        else:
+            txt = [
+                "~"*25,
+                "\n   Calculator - v1.0.0\n",
+                "~"*25
+            ]
 
-    def display_greeting(self):
-        text = [
-            "~"*45,
-            "    Welcome To Calculator - Version 0.1.0",
-            "~"*45
-        ]
+        for line in txt:
+            for char in line:
+                print(f"{char}\033[0m", end='', flush=True)
+                time.sleep(0.04)
 
-        return self.printer.write(
-            text,
-            color = self.colors.BLUE
-        )
+    def print_menu(self, menu: list):
+        for line in menu:
+            for char in line:
+                print(f"{char}\033[0m", end='', flush=True)
+                time.sleep(0.04)
 
-    def display_contact(self):
-        self.printer.reset_console()
+    def get_user_history(self):
+        curr_dir = os.getcwd()
+        src_dir = os.path.join(curr_dir, "src")
+        data_dir = os.path.join(src_dir, "data")
+        config_file = os.path.join(data_dir, "config.json")
 
-        text = [
-            "~"*75,
-            "Welcome To Calculator - Version 0.1.0",
-            "Author: mekasu0124",
-            "GitHub: https://github.com/mekasu0124/Calculator",
-            "Contact:",
-            "\temail: mekasurenae@gmail.com",
-            "\temail subject: RE: Calculator // <insert email title>",
-            "Issues:",
-            "\tgithub: https://github.com/mekasu0124/Calculator/issues",
-            "Releases:",
-            "\tgithub: https://github.com/mekasu0124/Calculator/releases/latest",
-            "~"*75
-        ]
+        with open(config_file, 'r', encoding="utf-8-sig") as f:
+            data = json.load(f)
 
-        return self.printer.write(
-            text,
-            color = self.colors.CYAN,
-        )
-    
-    def display_start_menu(self):        
-        text = [
-            "\n",
-            "Which Calculator Would You Like?",
-            "\n1. Standard",
-            "2. Scientific",
-            "H. View History",
-            "C. Contact Us",
-            "Q. Exit"
-        ]
+            history = data["history"]
 
-        self.printer.write(
-            text,
-            color = self.colors.PURPLE
-        )
+            return ['\n'.join([hist for hist in history])] if history else "No Previous Calculations Found"
