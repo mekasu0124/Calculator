@@ -1,74 +1,101 @@
-# root/main.py
-from src.utils.colors import ConsoleColors
+from src.setup.config import Config
+
 from src.utils.helpers import Helpers
-from src.utils.printer import Printer
+from src.utils.menus import Menus
 
-from src.app.engines.json_engine import JsonEngine
+from src.app.main import Calculator
 
-from src.app.standard.app import StandardCalculator
+import time
 
 
 class Main:
-    def __init__(self, printer, colors, helpers, json_engine, standard_calc):
-        self.running = True  # Initialize running state here
-        self.printer = printer
-        self.colors = colors
-        self.helpers = helpers
-        self.json_engine = json_engine
+    """
+    The Main() class handles the primary control
+    and life cycle of the application itself. Each
+    sub-calculator: Standard, Scientific, etc, are
+    each setup on their own independent loop using
+    a self.running = True instantiated within their
+    dunder init method. Although there may be a better
+    way to achieve the same goal, the goal itself is
+    to allow the user to control when entering/exiting
+    the sub-calculator based off their inputs within
+    any part of the application.
+    """
 
-        self.standard_calc = standard_calc
+    def __init__(
+            self, 
+            config: Config, 
+            helpers: Helpers, 
+            menu_options: Menus,
+            calc: Calculator
+        ):
+
+        self.running = True
+
+        self.config = config
+        self.helpers = helpers
+        self.menu_options = menu_options
+
+        self.calc = calc
 
     def start(self):
-        while self.running:  # Main loop embedded directly in the start method
-            self.printer.reset_console()
+        # set the config to run outside the main loop
+        # to ensure it only runs once per launch.
+        self.config.start_setup()
 
-            self.helpers.display_greeting()
-            self.helpers.display_start_menu()
+        while self.running:
+            self.helpers.print_title_bar()
 
-            valid_menu_choice = self.printer.get_string_from_console(
-                prompt="\n>>> Your Selection (1, 2, C, H, Q): ",
-                color=self.colors.WHITE,
-                validator=lambda x: x in ["1", "2", "C", "H", "Q", "c", "h", "q"],
-                error_message="Invalid Input. Input Must Be 1, 2, C, H, or Q. Try Again",
-                error_color=self.colors.RED
-            )
+            print("\n\nWhat Would You Like To Do?\n")
 
-            if valid_menu_choice == "1":
-                self.standard_calc.start()  # Call the standard calculator logic
+            self.helpers.print_menu(self.menu_options.main)
 
-            elif valid_menu_choice == "2":
-                print("Scientific Calculator Chosen")
-                # Placeholder for scientific calculator logic
+            menu_choice = input("\nYour Selection: ")
 
-            elif valid_menu_choice.lower() == "h":
-                self.json_engine.get_history()
+            try:
+                if int(menu_choice) == 1:
+                    print("\033[3J\033[H\033[2J")
+                    self.calc.start()
+                
+                elif int(menu_choice) == 2:
+                    print("\033[3J\033[H\033[2J")
+                    print("Starting Scientific Calculator")
+                
+                elif int(menu_choice) == 8:
+                    print("\033[3J\033[H\033[2J")
+                    print("Loading User History")
+                    print("")
+                    history = self.helpers.get_user_history()
+                    print(history)
+                    print("")
+                    input("Press Enter To Go Back...")
 
-            elif valid_menu_choice.lower() == "c":
-                self.helpers.display_contact()
+                elif int(menu_choice) == 9:
+                    print("\nExiting The Program...Please Wait...")
+                    time.sleep(0.5)
+                    return self.stop()
+                else:
+                    print("\nInvalid Input. Input Must Be A Whole Number 1-9. Try Again")
+            except Exception:
+                print("\nInvalid Input. Input Must Be A Whole Number 1-9. Try Again!")
+                print("If this problem persists, please contact support at mekshub@gmail.com")
+                input("Press Enter To Continue...")
+                print("\033[3J\033[H\033[2J")
 
-            elif valid_menu_choice.lower() == "q":
-                self.printer.write(
-                    "Exiting Calculator... Please Wait...",
-                    color=self.colors.BLACK
-                )
-                self.stop()
 
     def stop(self):
-        self.running = False  # Breaks the main loop
+        self.running = False
 
 
 if __name__ == '__main__':
-    printer = Printer()
-    colors = ConsoleColors
+    config = Config()
+    menu_options = Menus()
 
-    json_engine = JsonEngine()
+    helpers = Helpers()
 
-    helpers = Helpers(printer, colors)
-    standard_calc = StandardCalculator(printer, colors, helpers, json_engine)
+    calc = Calculator(helpers, menu_options)
+    main = Main(config, helpers, menu_options, calc)
 
-    main = Main(printer, colors, helpers, json_engine, standard_calc)
+    calc.set_main_stop_callback(main.stop)
 
-    standard_calc.set_stop_callback(main.stop)
-
-    # Start the main application
     main.start()
