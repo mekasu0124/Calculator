@@ -41,3 +41,6 @@ class Helpers:
             history = data["history"]
 
             return ['\n'.join([hist for hist in history])] if history else "No Previous Calculations Found"
+        
+    def clear_console(self):
+        return print("\033[3J\033[H\033[2J")
