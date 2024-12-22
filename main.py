@@ -3,7 +3,7 @@ from src.setup.config import Config
 from src.utils.helpers import Helpers
 from src.utils.menus import Menus
 
-from src.app.main import Calculator
+from src.app.main import StandardCalculator
 
 import time
 
@@ -26,8 +26,7 @@ class Main:
             self, 
             config: Config, 
             helpers: Helpers, 
-            menu_options: Menus,
-            calc: Calculator
+            menu_options: Menus
         ):
 
         self.running = True
@@ -35,8 +34,6 @@ class Main:
         self.config = config
         self.helpers = helpers
         self.menu_options = menu_options
-
-        self.calc = calc
 
     def start(self):
         # set the config to run outside the main loop
@@ -46,23 +43,37 @@ class Main:
         while self.running:
             self.helpers.print_title_bar()
 
-            print("\n\nWhat Would You Like To Do?\n")
+            print("\n\nWhich Calculator Would You Like?\n")
 
             self.helpers.print_menu(self.menu_options.main)
 
-            menu_choice = input("\nYour Selection: ")
+            menu_choice = input("\nYour Selection (1-9): ")
 
             try:
                 if int(menu_choice) == 1:
-                    print("\033[3J\033[H\033[2J")
-                    self.calc.start()
+                    self.helpers.clear_console()
+
+                    """
+                    If you instantiate the StandardCalculator()
+                    class down in the dunder name at the bottom
+                    of the file, and pass it in through the Main()
+                    class, it will not loop correctly when the user
+                    elects to go back to the main menu from the 
+                    standard calculator's menu options and then
+                    attempts to go back into the StandardCalculator()
+                    class.
+                    """
+
+                    calc = StandardCalculator(helpers, menu_options)
+                    calc.set_main_stop_callback(main.stop)
+                    calc.start()
                 
                 elif int(menu_choice) == 2:
-                    print("\033[3J\033[H\033[2J")
+                    self.helpers.clear_console()
                     print("Starting Scientific Calculator")
                 
                 elif int(menu_choice) == 8:
-                    print("\033[3J\033[H\033[2J")
+                    self.helpers.clear_console()
                     print("Loading User History")
                     print("")
                     history = self.helpers.get_user_history()
@@ -80,7 +91,7 @@ class Main:
                 print("\nInvalid Input. Input Must Be A Whole Number 1-9. Try Again!")
                 print("If this problem persists, please contact support at mekshub@gmail.com")
                 input("Press Enter To Continue...")
-                print("\033[3J\033[H\033[2J")
+                self.helpers.clear_console()
 
 
     def stop(self):
@@ -93,9 +104,6 @@ if __name__ == '__main__':
 
     helpers = Helpers()
 
-    calc = Calculator(helpers, menu_options)
-    main = Main(config, helpers, menu_options, calc)
-
-    calc.set_main_stop_callback(main.stop)
+    main = Main(config, helpers, menu_options)
 
     main.start()
