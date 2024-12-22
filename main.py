@@ -43,9 +43,9 @@ class Main:
         while self.running:
             self.helpers.print_title_bar()
 
-            print("\n\nWhich Calculator Would You Like?\n")
+            self.helpers.typewriter("\n\nWhich Calculator Would You Like?\n")
 
-            self.helpers.print_menu(self.menu_options.main)
+            self.helpers.typewriter(self.menu_options.main)
 
             menu_choice = input("\nYour Selection (1-9): ")
 
