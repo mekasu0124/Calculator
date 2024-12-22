@@ -20,10 +20,7 @@ class Helpers:
                 "~"*25
             ]
 
-        for line in txt:
-            for char in line:
-                print(f"{char}\033[0m", end='', flush=True)
-                time.sleep(0.04)
+        self.typewriter(txt)
 
     def typewriter(self, object: Union[str, List[str]], delay: float = 0.04):
         if isinstance(object, list):
