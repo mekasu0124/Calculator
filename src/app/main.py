@@ -40,10 +40,24 @@ class StandardCalculator:
                 if operation not in ["sqrt", "%"]:
                     num2 = int(input("\nEnter Second Number: "))
                     result = self.get_solution(num1, operation, num2)
+
+                    new_entry = {
+                        "num1": num1,
+                        "operation": operation,
+                        "num2": num2,
+                        "result": result
+                    }
                 else:
                     result = self.get_solution(num1, operation)
 
+                    new_entry = {
+                        "num1": num1,
+                        "operation": operation,
+                        "result": result
+                    }
+
                 print(result)
+                self.helpers.save_entry(new_entry)
                 self.wait_user_input()
             except Exception:
                 valid_list = ["Whole Number", "Decimal Number", "+", "-", "*", "/", "sqrt", "%"]
