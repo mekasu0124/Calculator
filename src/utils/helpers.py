@@ -1,3 +1,5 @@
+from typing import Union, List
+
 import json
 import time
 import os
@@ -23,11 +25,16 @@ class Helpers:
                 print(f"{char}\033[0m", end='', flush=True)
                 time.sleep(0.04)
 
-    def print_menu(self, menu: list):
-        for line in menu:
-            for char in line:
+    def typewriter(self, object: Union[str, List[str]], delay: float = 0.04):
+        if isinstance(object, list):
+            for line in object:
+                for char in line:
+                    print(f"{char}\033[0m", end='', flush=True)
+                    time.sleep(delay)
+        else:
+            for char in object:
                 print(f"{char}\033[0m", end='', flush=True)
-                time.sleep(0.04)
+                time.sleep(delay)
 
     def get_user_history(self):
         curr_dir = os.getcwd()
@@ -44,3 +51,17 @@ class Helpers:
         
     def clear_console(self):
         return print("\033[3J\033[H\033[2J")
+    
+    def save_entry(self, entry: dict):
+        curr_dir = os.getcwd()
+        src_dir = os.path.join(curr_dir, "src")
+        data_dir = os.path.join(src_dir, "data")
+        config_file = os.path.join(data_dir, "config.json")
+
+        with open(config_file, 'r', encoding="utf-8-sig") as f:
+            data = json.load(f)
+
+            data["history"].append(entry)
+
+            with open(config_file, 'w+', encoding="utf-8-sig") as new:
+                json.dump(data, new, indent=2)
