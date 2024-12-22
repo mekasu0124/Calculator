@@ -5,7 +5,3 @@ class Menus:
         "8. Previous Calculations\n",
         "9. Exit Program\n"
     ]
-
-    scientific: list = [
-        "Not built yet dumbass\n"
-    ]
