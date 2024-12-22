@@ -3,7 +3,7 @@ from src.setup.config import Config
 from src.utils.helpers import Helpers
 from src.utils.menus import Menus
 
-from src.app.main import StandardCalculator
+from app.standard.main import StandardCalculator
 
 import time
 
