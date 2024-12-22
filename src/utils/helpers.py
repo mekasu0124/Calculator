@@ -62,3 +62,7 @@ class Helpers:
 
             with open(config_file, 'w+', encoding="utf-8-sig") as new:
                 json.dump(data, new, indent=2)
+
+    def wait_user_input(self):
+        input("Press Enter To Continue...")
+        self.helpers.clear_console()

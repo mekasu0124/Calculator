@@ -57,11 +57,11 @@ class StandardCalculator:
 
                 print(result)
                 self.helpers.save_entry(new_entry)
-                self.wait_user_input()
+                self.helpers.wait_user_input()
             except Exception:
                 valid_list = ["Whole Number", "Decimal Number", "+", "-", "*", "/", "sqrt", "%"]
                 print(f"\nInvalid Input. Input Must Be: {', '.join(valid_list)}")
-                self.wait_user_input()
+                self.helpers.wait_user_input()
 
     def get_solution(self, num1: float, operation: str, num2: float = None) -> str:
         if operation == "+":
@@ -90,10 +90,8 @@ class StandardCalculator:
             else:
                 sum = num1 * 100
                 return f"The whole number value of {num1} is {sum}"
-
-    def wait_user_input(self):
-        input("Press Enter To Continue...")
-        self.helpers.clear_console()
+            
+        self.helpers.wait_user_input()
         
     def stop(self):
         """
@@ -106,7 +104,3 @@ class StandardCalculator:
         print("\nReturning To Main Menu...Please Wait...")
         time.sleep(2)
         self.running = False
-
-    def stop_main(self):
-        if self.stop_main_callback:
-            self.stop_main_callback()
