@@ -64,7 +64,7 @@ class Main:
                     class.
                     """
 
-                    calc = StandardCalculator(helpers, menu_options)
+                    calc = StandardCalculator(helpers)
                     calc.set_main_stop_callback(main.stop)
                     calc.start()
                 

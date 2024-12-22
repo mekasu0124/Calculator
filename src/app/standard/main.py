@@ -5,12 +5,11 @@ import math
 
 
 class StandardCalculator:
-    def __init__(self, helpers, menu_options):
+    def __init__(self, helpers):
         self.running = True
         self.stop_main_callback = None # set the main applications stop function callback
 
         self.helpers = helpers
-        self.menu_options = menu_options
 
     def set_main_stop_callback(self, callback: Callable):
         """
