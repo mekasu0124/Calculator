@@ -16,7 +16,7 @@ class Helpers:
         else:
             txt = [
                 "~"*25,
-                "\n   Calculator - v1.0.0\n",
+                "   Calculator - v1.0.0\n",
                 "~"*25
             ]
 
